@@ -1,0 +1,62 @@
+const Discord = require(`discord.js`);
+
+ 
+
+exports.run = async (client, message, args, bot, guild) => {
+ 
+
+
+  let everyone = message.guild.roles.find(r => r.name === `@everyone`)
+  let yetkili = ('637316043265540096')
+  let reason = args.slice(0).join(' ');
+const embed = new Discord.RichEmbed()
+.setColor('RANDOM')
+.setTitle('***TPD Destek Talebi***')
+.addField('***Destek İsteme Sebebiniz :***',' *'+ reason + '*')
+.addField('*Yetkili ekibimiz sizinle en kısa sürede ilgilenecektir.*','*Beklediğiniz için teşekkür ederiz.*')
+.addField('*Talebi kapatmak için kullanacağınız komut:*','!kapat')
+.addField('**Destek İsteyen :**'+' ',message.author)
+.setTimestamp();
+    if (message.guild.channels.exists("name", "ticket-" + message.author.id)) return message.author.send(`Zaten açık durumda bir ticketin var.`);
+  
+  message.guild.createChannel('ticket-'+ message.author.id, `text`).then(channel => { channel.overwritePermissions(message.author, {
+
+  'SEND_MESSAGES': true,
+
+  'READ_MESSAGE_HISTORY': true,
+
+  'VIEW_CHANNEL': true }),
+  
+  channel.send(embed)
+  channel.send('@everyone')
+  channel.overwritePermissions(yetkili, {
+  
+  'VIEW_CHANNEL' : true})
+
+  channel.overwritePermissions(everyone, {
+
+  'VIEW_CHANNEL': false}) })
+ 
+
+
+};
+exports.conf = {
+
+  enabled: true,
+
+  guildOnly: true,
+
+  aliases: ['ka'],
+
+  permLevel: 0
+
+}
+
+ 
+
+exports.help = {
+
+  name: 'kanalaç'
+
+}
+
